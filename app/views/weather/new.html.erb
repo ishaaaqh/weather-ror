@@ -1,0 +1,21 @@
+<div class="container">
+  <h3 class="center-align">Weather Forecast</h3>
+
+  <div class="row">
+    <div class="col s12 m6 offset-m3">
+      <div class="card-panel">
+        <%= form_with url: weather_path, method: :get, local: true, class: "row" do %>
+          <div class="input-field col s12">
+            <i class="material-icons prefix">location_on</i>
+            <%= text_field_tag :address, params[:address], placeholder: "Enter city or ZIP code", class: "validate" %>
+            <label for="address">Enter Address</label>
+          </div>
+          
+          <div class="col s12 center-align">
+            <%= submit_tag "Get Weather", class: "btn waves-effect waves-light blue" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
