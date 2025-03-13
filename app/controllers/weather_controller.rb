@@ -7,7 +7,9 @@ class WeatherController < ApplicationController
 
     def show
       address = params[:address]
-      return unless address.present?
+      if params[:address].blank?
+        redirect_to root_path
+      end
   
       # Geocode address to get latitude & longitude
       location = Geocoder.search(address).first
@@ -33,9 +35,10 @@ class WeatherController < ApplicationController
   
     def fetch_weather(lat, lon)
       api_key = ENV['OPENWEATHER_API_KEY']
+      Rails.logger.debug "Open weather API key accessed: #{api_key}"
       url = "https://api.openweathermap.org/data/2.5/weather?lat=#{lat}&lon=#{lon}&appid=#{api_key}&units=metric"
       response = HTTParty.get(url)
-      binding.pry
+      Rails.logger.debug "response: #{response}"
       if response.success?
         {
           temp: response["main"]["temp"],
